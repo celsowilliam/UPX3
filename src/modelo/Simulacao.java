@@ -7,7 +7,7 @@ public class Simulacao {
     private List<Aparelho> inventario;
     private double valorKwh;
     private int idUsuario;
-    private final double taxa_minima_solar = 60.00; // Valor fixo que pagará com solar
+    private final double taxa_minima_solar = 60.00; // Valor minimo fixo que pagará com placa solar
 
     public Simulacao(int idUsuario, double precoKwhRegiao) {
         this.idUsuario = idUsuario;

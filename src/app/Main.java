@@ -10,12 +10,12 @@ public class Main {
     private static Usuario usuario;
 
     public static void main(String[] args) {
-        System.out.println("------------------------------------------");
+        System.out.println(" ");
         System.out.println("     SIMULADOR SOLAR - UPX3");
-        System.out.println("-------------------------------------------");
+        System.out.println(" ");
         System.out.print("Nome do Usuário: ");
         String nome = scn.nextLine();
 
-        
+        //apenas pra enviar pro github
     }
 }

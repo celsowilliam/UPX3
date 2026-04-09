@@ -9,11 +9,11 @@ public class Usuario {
     private double rendaFamiliar;
 
     //    Novo Cadastro
-    public Usuario(String nome, String login, String senha) {
-        if (nome == null || nome.trim().isEmpty() || login == null || login.trim().isEmpty() || senha == null || senha.trim().isEmpty()) {
+    public Usuario(String nome_usuario, String login, String senha) {
+        if (nome_usuario == null || nome_usuario.trim().isEmpty() || login == null || login.trim().isEmpty() || senha == null || senha.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome, Login e Senha são obrigatórios.");
         }
-        this.nome = nome;
+        this.nome = nome_usuario;
         this.login = login;
         this.senha = senha;
     }
