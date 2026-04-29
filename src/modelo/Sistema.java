@@ -177,7 +177,7 @@ public class Sistema {
         return usuarioAtual != null;
     }
 
-    // --- Utilitário ---
+    // --- Leitura de opção ---
     private int lerOpcao() {
         if (scn.hasNextInt()) {
             int opcao = scn.nextInt();
