@@ -1,2 +1,7 @@
 node_modules/
-.DS_Store
+.DS_Storegit
+// Ignorar JDK (NUNCA subir isso)
+oracleJdk-26/
+
+//Arquivos compilados Java
+*.class
