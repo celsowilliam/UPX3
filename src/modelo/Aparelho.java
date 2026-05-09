@@ -24,7 +24,16 @@ public class Aparelho {
         return getConsumoKwhMes() * precoKwh;
     }
 
-    public String getNome() { return nome; }
-    public double getPotenciaWatts() { return potenciaWatts; }
-    public int getQuantidade() { return quantidade; }
+    public String getNome() {
+        return nome;
+    }
+    public double getPotenciaWatts() {
+        return potenciaWatts;
+    }
+    public int getQuantidade() {
+        return quantidade;
+    }
+    public double getHorasUsoDiario() {
+        return horasUsoDiario;
+    }
 }

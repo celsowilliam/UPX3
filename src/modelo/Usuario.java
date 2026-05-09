@@ -6,13 +6,14 @@ import java.util.Set;
 public class Usuario {
     private int idUsuario;
     private String nome;
-    private String login; // Email
+    private String email;
     private String senha;
-    private String cidade;
-    private String ddd; //DDD SP
+    private String ddd;
+    private double rendaFamiliar;
+    private int numeroPessoas;
+    private String tipoTelhado;
 
-    //Conjunto de DDDs válidos para SP, para validação no cadastro/login
-    private static Set<String> DDD_SP = new HashSet<>(); // Para evitar logins duplicados
+    private static Set<String> DDD_SP = new HashSet<>();
 
     static {
         DDD_SP.add("11");
@@ -26,81 +27,165 @@ public class Usuario {
         DDD_SP.add("19");
     }
 
-    //    Novo Cadastro
-    public Usuario(String nome_usuario, String login, String senha) {
-        if (nome_usuario == null || nome_usuario.trim().isEmpty() || login == null || login.trim().isEmpty() || senha == null || senha.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome, Login e Senha são obrigatórios.");
-        }
+    // Cadastro inicial
+    public Usuario(String nome, String email, String senha) {
+        validarNome(nome);
+        validarEmail(email);
+        validarSenha(senha);
 
-        this.nome = nome_usuario;
-        this.login = login;
+        this.nome = nome;
+        this.email = email;
         this.senha = senha;
     }
 
-    //   Login / Banco de Dados
-    public Usuario(int idUsuario, String nome, String login, String senha, String cidade, String ddd) {
-
+    // Leitura do banco
+    public Usuario(int idUsuario, String nome, String ddd, double rendaFamiliar, int numeroPessoas,
+            String tipoTelhado, String email, String senha) {
         validarNome(nome);
-        validarEmail(login);
+        validarDdd(ddd);
+        validarRendaFamiliar(rendaFamiliar);
+        validarNumeroPessoas(numeroPessoas);
+        validarTipoTelhado(tipoTelhado);
+        validarEmail(email);
         validarSenha(senha);
-        validarCidade(cidade);
-
-        if (!dddValidoSP(ddd)) {
-            throw new IllegalArgumentException("DDD inválido para São Paulo. Deve ser entre 11 e 19.");
-        }
 
         this.idUsuario = idUsuario;
         this.nome = nome;
-        this.login = login;
-        this.senha = senha;
-        this.cidade = cidade;
         this.ddd = ddd;
+        this.rendaFamiliar = rendaFamiliar;
+        this.numeroPessoas = numeroPessoas;
+        this.tipoTelhado = tipoTelhado;
+        this.email = email;
+        this.senha = senha;
     }
-    
+
+    // Inserção nova com todos os dados
+    public Usuario(String nome, String ddd, double rendaFamiliar, int numeroPessoas, String tipoTelhado,
+            String email, String senha) {
+        validarNome(nome);
+        validarDdd(ddd);
+        validarRendaFamiliar(rendaFamiliar);
+        validarNumeroPessoas(numeroPessoas);
+        validarTipoTelhado(tipoTelhado);
+        validarEmail(email);
+        validarSenha(senha);
+
+        this.nome = nome;
+        this.ddd = ddd;
+        this.rendaFamiliar = rendaFamiliar;
+        this.numeroPessoas = numeroPessoas;
+        this.tipoTelhado = tipoTelhado;
+        this.email = email;
+        this.senha = senha;
+    }
+
     private void validarNome(String nome) {
-        if (nome == null || nome.trim().isEmpty()) {
+        if (nome == null || nome.trim().isEmpty())
             throw new IllegalArgumentException("Nome é obrigatório.");
-        }
     }
 
     private void validarEmail(String email) {
-        if (email == null || !email.contains("@") || !email.contains(".")) {
+        if (email == null || !email.contains("@") || !email.contains("."))
             throw new IllegalArgumentException("Email inválido.");
-        }
     }
 
     private void validarSenha(String senha) {
-        if (senha == null || senha.length() < 8) {
-            throw new IllegalArgumentException("Senha deve conter pelo menos 8 caracteres.");
-        }
-
-        if (!senha.matches(".*[A-Z].*")) {
-            throw new IllegalArgumentException("Senha deve conter pelo menos uma letra maiúscula.");
-        }
-
-        if (!senha.matches(".*[0-9].*")) {
-            throw new IllegalArgumentException("Senha deve conter pelo menos um número.");
-        }
+        if (senha == null || senha.length() < 8)
+            throw new IllegalArgumentException("Senha deve ter pelo menos 8 caracteres.");
+        if (!senha.matches(".*[A-Z].*"))
+            throw new IllegalArgumentException("Senha deve ter pelo menos uma letra maiúscula.");
+        if (!senha.matches(".*[0-9].*"))
+            throw new IllegalArgumentException("Senha deve ter pelo menos um número.");
     }
 
-    private void validarCidade(String cidade) {
-        if (cidade == null || cidade.trim().isEmpty()) {
-            throw new IllegalArgumentException("Cidade é obrigatória.");
-        }
+    private void validarDdd(String ddd) {
+        if (!dddValidoSP(ddd))
+            throw new IllegalArgumentException("DDD inválido. Informe um DDD de SP (11 a 19).");
     }
-    
-    private boolean dddValidoSP(String ddd) {
+
+    private void validarRendaFamiliar(double renda) {
+        if (renda < 0)
+            throw new IllegalArgumentException("Renda familiar não pode ser negativa.");
+    }
+
+    private void validarNumeroPessoas(int pessoas) {
+        if (pessoas <= 0)
+            throw new IllegalArgumentException("Número de pessoas deve ser maior que zero.");
+    }
+
+    private void validarTipoTelhado(String tipo) {
+        if (tipo == null || tipo.trim().isEmpty())
+            throw new IllegalArgumentException("Tipo de telhado é obrigatório.");
+    }
+
+    public static boolean dddValidoSP(String ddd) {
         return DDD_SP.contains(ddd);
     }
 
-    public int getIdUsuario() { return idUsuario; }
-    public String getNome() { return nome; }
-    public String getLogin() { return login; }
-    public String getSenha() { return senha; }
-    public String getCidade() { return cidade; }
-    public String getDdd() { return ddd; }
+    public int getIdUsuario() {
+        return idUsuario;
+    }
 
-    // ............................................ \\
-// teste git
+    public String getNome() {
+        return nome;
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public String getDdd() {
+        return ddd;
+    }
+
+    public double getRendaFamiliar() {
+        return rendaFamiliar;
+    }
+
+    public int getNumeroPessoas() {
+        return numeroPessoas;
+    }
+
+    public String getTamanhoTelhado() {
+        return tipoTelhado;
+    }
+
+    public void setDdd(String ddd) {
+        validarDdd(ddd);
+        this.ddd = ddd;
+    }
+
+    public void setRendaFamiliar(double rendaFamiliar) {
+        validarRendaFamiliar(rendaFamiliar);
+        this.rendaFamiliar = rendaFamiliar;
+    }
+
+    public void setNumeroPessoas(int numeroPessoas) {
+        validarNumeroPessoas(numeroPessoas);
+        this.numeroPessoas = numeroPessoas;
+    }
+
+    public void setTipoTelhado(String tipoTelhado) {
+        validarTipoTelhado(tipoTelhado);
+        this.tipoTelhado = tipoTelhado;
+    }
+
+    public void setNome(String nome) {
+        validarNome(nome);
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        validarEmail(email);
+        this.email = email;
+    }
+
+    public void setSenha(String senha) {
+        validarSenha(senha);
+        this.senha = senha;
+    }
 }

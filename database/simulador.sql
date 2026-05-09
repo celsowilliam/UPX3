@@ -1,0 +1,1 @@
+CREATE DATABASE simulador_energia;
